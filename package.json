@@ -1,0 +1,20 @@
+{
+  "name": "@tavric-labs/docs-theme",
+  "version": "1.0.0",
+  "description": "The shared VitePress theme and config for Tavric Labs documentation sites.",
+  "type": "module",
+  "license": "MIT",
+  "repository": "github:tavric-labs/docs-theme",
+  "exports": {
+    "./config": "./config.mjs",
+    "./theme": "./theme/index.js",
+    "./assets/*": "./assets/*"
+  },
+  "files": ["config.mjs", "theme", "assets"],
+  "peerDependencies": {
+    "mermaid": "^11.4.1",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "^2.0.17"
+  },
+  "engines": { "node": ">=22" }
+}
