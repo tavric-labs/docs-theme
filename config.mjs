@@ -48,10 +48,27 @@ export function defineDocsConfig(options) {
   const root = docsRoot || defaultBase
 
   // A tag may predate some pages; drop navigation entries that would 404.
+  // Pages are matched case-insensitively (docs/ARCHITECTURE.md can be served
+  // at /architecture) and through `rewrites`, so the check agrees with the
+  // built site on case-sensitive file systems too.
+  const known = new Set()
+  const addPage = (rel) => known.add(rel.replace(/\.md$/i, '').replace(/\/index$/i, '').replace(/^\//, '').toLowerCase())
+  const walk = (dir, prefix = '') => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name === '.vitepress' || entry.name === 'node_modules' || entry.name === 'public') continue
+      if (entry.isDirectory()) walk(path.join(dir, entry.name), `${prefix}${entry.name}/`)
+      else if (/\.md$/i.test(entry.name)) addPage(`${prefix}${entry.name}`)
+    }
+  }
+  if (fs.existsSync(docsDir)) walk(docsDir)
+  const rewrites = extra.rewrites && typeof extra.rewrites === 'object' ? extra.rewrites : {}
+  for (const [from, to] of Object.entries(rewrites)) {
+    if (known.has(from.replace(/\.md$/i, '').replace(/\/index$/i, '').replace(/^\//, '').toLowerCase())) addPage(to)
+  }
   const hasPage = (link) => {
     if (!link.startsWith('/')) return true
-    const page = link.replace(/\/$/, '') || '/index'
-    return fs.existsSync(path.join(docsDir, `${page}.md`))
+    const page = link.split('#')[0].replace(/\.html$/i, '').replace(/\/index$/i, '').replace(/^\/|\/$/g, '')
+    return known.has(page.toLowerCase()) || (page === '' && known.has('index')) || (page === '' && known.has(''))
   }
   const prune = (items) =>
     items
