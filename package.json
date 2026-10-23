@@ -1,6 +1,6 @@
 {
   "name": "@tavric-labs/docs-theme",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The shared VitePress theme and config for Tavric Labs documentation sites.",
   "type": "module",
   "license": "MIT",

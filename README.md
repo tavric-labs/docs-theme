@@ -6,7 +6,7 @@ The shared [VitePress](https://vitepress.dev) theme and configuration for Tavric
 
 ```bash
 npm i -D vitepress@1.6.4 mermaid@11.4.1 vitepress-plugin-mermaid@2.0.17 \
-  "@tavric-labs/docs-theme@https://github.com/tavric-labs/docs-theme/archive/refs/tags/v1.0.2.tar.gz"
+  "@tavric-labs/docs-theme@https://github.com/tavric-labs/docs-theme/archive/refs/tags/v1.0.3.tar.gz"
 ```
 
 `docs/.vitepress/config.mjs`:
