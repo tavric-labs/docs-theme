@@ -31,6 +31,7 @@ export function defineDocsConfig(options) {
     sidebar = [],
     branch = 'main',
     docsDir = path.resolve(process.cwd(), 'docs'),
+    defaultBase = '/',
     docsRoot,
     logo = '/logo.svg',
     extra = {}
@@ -39,12 +40,12 @@ export function defineDocsConfig(options) {
     if (!options[key]) throw new Error(`defineDocsConfig: "${key}" is required`)
   }
 
-  const base = process.env.DOCS_BASE || '/'
+  const base = process.env.DOCS_BASE || defaultBase
   const version = process.env.DOCS_VERSION || ''
   const ref = process.env.DOCS_REF || branch
   const repoUrl = `https://github.com/${repo}`
   const repoDir = path.resolve(docsDir, '..')
-  const root = docsRoot || base
+  const root = docsRoot || defaultBase
 
   // A tag may predate some pages; drop navigation entries that would 404.
   const hasPage = (link) => {

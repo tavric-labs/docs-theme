@@ -6,7 +6,7 @@ The shared [VitePress](https://vitepress.dev) theme and configuration for Tavric
 
 ```bash
 npm i -D vitepress@1.6.4 mermaid@11.4.1 vitepress-plugin-mermaid@2.0.17 \
-  "@tavric-labs/docs-theme@git+https://github.com/tavric-labs/docs-theme.git#v1.0.0"
+  "@tavric-labs/docs-theme@https://github.com/tavric-labs/docs-theme/archive/refs/tags/v1.0.1.tar.gz"
 ```
 
 `docs/.vitepress/config.mjs`:
@@ -34,10 +34,10 @@ Copy `assets/logo.svg` and `assets/favicon.svg` into `docs/public/`, and add `do
 
 ## Options
 
-`name`, `repo` (`owner/name`), `siteUrl` and `description` are required. Optional: `nav`, `sidebar`, `branch` (default `main`), `docsDir`, `logo`, and `extra` (merged over the defaults: `head`, `themeConfig`, `mermaid`, `vite`, or any other VitePress option).
+`name`, `repo` (`owner/name`), `siteUrl` and `description` are required. Optional: `nav`, `sidebar`, `branch` (default `main`), `defaultBase` (URL base when `DOCS_BASE` is unset, default `/`), `docsRoot` (where `versions.json` lives; defaults to `defaultBase`), `docsDir`, `logo`, and `extra` (merged over the defaults: `head`, `themeConfig`, `mermaid`, `vite`, or any other VitePress option).
 
 Navigation entries whose page does not exist are dropped, so versioned builds of older tags need no special casing. Set `DOCS_BASE`, `DOCS_VERSION` and `DOCS_REF` for a versioned build: pages get a banner and a version switcher reads `<root>versions.json`.
 
 ## Changing the design
 
-Change it once here, tag a release, then bump the `#vX.Y.Z` in each site's `package.json` and lockfile. Sites are not updated automatically.
+Change it once here and tag a release, then update the tarball URL (`.../refs/tags/vX.Y.Z.tar.gz`) in each site's `package.json` and run `npm install` to refresh the lockfile. Sites are not updated automatically. The tarball URL is used instead of a `git+` dependency because the lockfile then records plain HTTPS with an integrity hash, which `npm ci` can fetch in CI without SSH.
